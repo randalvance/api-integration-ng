@@ -9,6 +9,7 @@ import {
 
 import { AuthConstants } from './auth.constants';
 import { SignInComponent } from './components';
+import { AuthActions } from './store/auth.actions';
 
 @NgModule({
     declarations: [
@@ -22,6 +23,7 @@ import { SignInComponent } from './components';
       SocialLoginModule
     ],
     providers: [
+      AuthActions,
       {
         provide: AuthServiceConfig,
         useFactory: getAuthServiceConfigs

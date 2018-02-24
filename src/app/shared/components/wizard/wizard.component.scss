@@ -1,0 +1,85 @@
+@import '../../../../styles/variables';
+
+.wizard {
+  position: relative;
+}
+
+.wizard-steps {
+  margin: 0;
+  padding: 0;
+  display: table;
+  width: 100%;
+  overflow: hidden;
+  font-size: 14px;
+
+  li {
+    background-color: #f0f3f4;
+    color: #fff;
+    position: relative;
+    display: table-cell;
+    margin-right: 5px;
+    padding: 15px;
+    list-style: none;
+    line-height: 20px;
+
+    a {
+      color: #333;
+      margin-left: 30px;
+      display: block;
+      text-decoration: none;
+    }
+
+    .li-common {
+
+      position: absolute;
+      top: 0;
+      height: 0;
+      width: 0;
+      border-bottom: 20px inset transparent;
+      border-top: 20px inset transparent;
+      content: "";
+    }
+
+    .label {
+        float: left;
+        background: rgba(0,0,0,.2) !important;
+        padding: 0;
+        margin-right: 10px;
+        position: relative;
+        top: 0;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: baseline;
+        height: 20px;
+        width: 20px;
+        border-radius: 50%;
+        font-size: 75%;
+        font-weight: 600;
+    }
+
+    &.active {
+      background: $color1;
+
+      a {
+        color: #fff;
+        cursor: default;
+      }
+    }
+
+    &.clickable {
+      &:not(.active) {
+        cursor: pointer;
+
+        &:hover {
+          background: darken(#f0f3f4, 10%);
+        }
+      }
+    }
+
+    &:not(.clickable) {
+      a {
+        cursor: default;
+      }
+    }
+  }
+}

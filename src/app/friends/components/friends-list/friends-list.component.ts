@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { dispatch, select, select$ } from '@angular-redux/store';
+import { dispatch, select, select$, WithSubStore } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
 import { Friend } from '../../models/Friend';
+import { friendsReducer } from '../../store/friends.reducer';
+
 
 @Component({
   selector: 'app-friends-list',
@@ -10,7 +12,8 @@ import { Friend } from '../../models/Friend';
 })
 export class FriendsListComponent implements OnInit {
   
-  @select() readonly friends$: Observable<Friend[]>;
+  @select(store => store.friends.friends) 
+  readonly friends$: Observable<Friend[]>;
 
   constructor() { }
 
