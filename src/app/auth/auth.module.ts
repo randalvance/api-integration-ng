@@ -32,7 +32,7 @@ import { AuthActions } from './store/auth.actions';
   })
   export class AuthModule { }
   
-  function getAuthServiceConfigs() {
+  export function getAuthServiceConfigs() {
     let config = new AuthServiceConfig([
       {
         id: FacebookLoginProvider.PROVIDER_ID,

@@ -1,0 +1,33 @@
+version: '3'
+
+services:
+  randal-apiintegration-ng:
+    image: 'randal/apiintegration-ng'
+    container_name: 'apiintegration-ng'
+    ports:
+     - '8005:80'
+    depends_on:
+      - randal-apiintegration
+    environment:
+     - FACEBOOK_GRAPH_API_BASE_URL=https://graph.facebook.com/v2.12/
+     - BACKEND_GRAPH_API_BASE_URL=http://apiintegration-api:8001
+  randal-apiintegration:
+    image: randal/apiintegration
+    container_name: 'apiintegration-api'
+    ports:
+      - '8001:80'
+    depends_on:
+      - postgres
+    environment:
+      - ConnectionStrings:DefaultConnection=Host=apiintegration-db;Database=apiintegration-db;Username=randalvance;Password=P@ssw0rd
+  postgres:
+    image: 'postgres'
+    container_name: 'apiintegration-db'
+    ports:
+     - '5432:5432'
+    environment:
+     - POSTGRES_USER=randalvance
+     - POSTGRES_PASSWORD=P@ssw0rd
+     - POSTGRES_DB=apiintegration-db
+
+     

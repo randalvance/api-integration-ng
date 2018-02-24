@@ -10,11 +10,13 @@ import 'rxjs/add/observable/from';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import { FriendsListApiResponse } from '../models/FriendsListApiReponse';
+import { FriendsListCreateRequest } from '../models/FriendsListCreateRequest';
+import { FriendsListCreateDto } from '../models/FriendsListCreateDto';
+
+import { environment } from '../../../environments/environment';
 
 @Injectable()
-export class FriendsListService {
-    private static readonly BASE_API_URL = 'https://graph.facebook.com/v2.12/';
-
+export class FriendsListService {    
     constructor(
         private http: Http, 
         private store: NgRedux<AppState>) {
@@ -26,13 +28,24 @@ export class FriendsListService {
 
         if (!accessToken) return Observable.throw(new Error('Not logged in.'));
 
-        return this.http.get(`${FriendsListService.BASE_API_URL}me/friendlists`, {
+        return this.http.get(`${environment.facebookGraphApiBaseUrl}me/friendlists`, {
                 params: { 
                     'access_token' : accessToken,
                     'fields': 'id,name' }
             })
             .map((response: Response) => <FriendsListApiResponse>response.json())
             .map(apiResponse => apiResponse.data.map(apiFriendsList => <FriendsList>{ id : apiFriendsList.id, name: apiFriendsList.name }))
+            .catch((err, caught) => {
+                return Observable.throw(err || 'An error occured');
+            });
+    }
+
+    addAllFriendsList(friendsLists : FriendsList[]) : Observable<any> {
+        let c = this.store.getState().auth.loggedInUser.userId;
+
+        return this.http.post(`${environment.backendBaseApiUrl}friendlists`, <FriendsListCreateRequest>{
+                data: friendsLists.map((fl, _) => <FriendsListCreateDto>{ friendsListId: fl.id, name: fl.name })
+            })
             .catch((err, caught) => {
                 return Observable.throw(err || 'An error occured');
             });
