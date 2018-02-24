@@ -1,8 +1,9 @@
 <div class="wizard clearfix">
     <ol class="wizard-steps clearfix">
-      <li *ngFor="let step of wizardSteps; let i = index" role="tab" aria-selected="true" [ngClass]="{ active: i == currentIndex, clickable: i <= maxIndexVisited }">
+      <li *ngFor="let step of wizardSteps; let i = index" role="tab" aria-selected="true" 
+            [ngClass]="{ active: i == currentIndex, clickable: i <= maxIndexVisited && step.allowNavigate }">
         <span class="label badge-inverse">{{i + 1}}</span>
-        <a href="javascript:void(0)" (click)="navigateToIndex(i)">{{step.title}}</a>
+        <a href="javascript:void(0)" (click)="navigateToIndex(i, step.allowNavigate)">{{step.title}}</a>
       </li>
     </ol>
     <ng-content>

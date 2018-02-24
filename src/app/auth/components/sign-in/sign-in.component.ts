@@ -6,7 +6,7 @@ import {
   AuthService,
   FacebookLoginProvider,
   SocialUser
-} from 'angular5-social-login';
+} from 'angularx-social-login';
 import { UserInfo } from '../../models/user-info.model';
 
 @Component({
@@ -27,9 +27,10 @@ export class SignInComponent implements OnInit {
   public signIn() {
     let subscription = Observable.fromPromise(this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID));
     subscription.map(data => <UserInfo>{
+      userId: data.id,
       name: data.name,
       email: data.email,
-      token: data.token
+      token: data.authToken
     }).subscribe(userData => {
       this.onSignIn.emit(userData);
     });

@@ -60,7 +60,9 @@ export class WizardComponent implements AfterContentInit, OnInit {
   ngOnInit(): void {
   }
 
-  navigateToIndex(index: number) {
+  navigateToIndex(index: number, allowNavigate: boolean) {
+    if (!allowNavigate) return;
+    
     if (index <= this.maxIndexVisited) {
       this.currentIndex = index;
     }

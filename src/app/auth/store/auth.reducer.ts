@@ -4,7 +4,7 @@ import { AuthAction, AuthActions } from './auth.actions';
 
 export const authReducer = (state : AuthState = INITIAL_STATE, a : Action) : AuthState => {
     const action = a as AuthAction;
-    console.log(a.type);
+    
     switch (action.type) {
         case AuthActions.LOGIN_USER:
             return {

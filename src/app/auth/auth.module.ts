@@ -4,8 +4,8 @@ import { NgModule } from '@angular/core';
 import {
     SocialLoginModule,
     AuthServiceConfig,
-    FacebookLoginProvider,
-  } from 'angular5-social-login';
+    FacebookLoginProvider
+  } from 'angularx-social-login';
 
 import { AuthConstants } from './auth.constants';
 import { SignInComponent } from './components';
@@ -36,7 +36,11 @@ import { AuthActions } from './store/auth.actions';
     let config = new AuthServiceConfig([
       {
         id: FacebookLoginProvider.PROVIDER_ID,
-        provider: new FacebookLoginProvider(AuthConstants.FACEBOOK_APP_ID)
+        provider: new FacebookLoginProvider(AuthConstants.FACEBOOK_APP_ID, {
+          scope: 'read_custom_friendlists',
+          return_scopes: true,
+          enable_profile_selector: true
+        })
       }
     ]);
   
