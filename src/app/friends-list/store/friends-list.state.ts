@@ -1,9 +1,11 @@
 import { FriendsList } from '../models/FriendsList';
 
 export const INITIAL_STATE : FriendsListState = {
-    friendsList: []
+    friendsLists: [],
+    selectedFriendsLists: []
 };
 
 export interface FriendsListState {
-    friendsList : FriendsList[]
+    friendsLists : FriendsList[],
+    selectedFriendsLists : FriendsList[]
 }

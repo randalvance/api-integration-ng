@@ -12,6 +12,7 @@ import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/do';
 import { FriendsListActions } from './friends-list/store/friends-list.actions';
+import { FriendsList } from './friends-list/models/FriendsList';
 
 @Component({
   selector: 'app-root',
@@ -27,7 +28,7 @@ export class AppComponent implements OnInit {
   constructor(
     private friendService: FriendsListService,
     private authActions : AuthActions,
-    private friendActions: FriendsListActions) {
+    private friendsListActions: FriendsListActions) {
   }
 
   ngOnInit(): void {
@@ -35,10 +36,18 @@ export class AppComponent implements OnInit {
       .filter((user, _) => !!(user && user.token))
       .do(user => this.wizard.next())
       .flatMap(user => this.friendService.listAllFriendsList())
-      .subscribe(friendsLists => this.friendActions.addFriendsLists(friendsLists));
+      .subscribe(friendsLists => this.friendsListActions.addFriendsLists(friendsLists));
   }
 
   signIn(userInfo: UserInfo) {
     this.authActions.loginUser(userInfo);
+  }
+
+  addToSelectedFriendsList(friendsList : FriendsList) {
+    this.friendsListActions.addToSelectedFriendsList(friendsList);
+  }
+
+  removeFromSelectedFriendsList(friendsList : FriendsList) {
+    this.friendsListActions.removeFromSelectedFriendsList(friendsList);
   }
 }

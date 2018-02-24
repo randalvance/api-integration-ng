@@ -2,8 +2,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { NgReduxModule, NgRedux, DevToolsExtension } from '@angular-redux/store';
 
-import { ArchwizardModule } from 'ng2-archwizard';
-
 import { AuthModule } from './auth/auth.module';
 import { FriendsListModule } from './friends-list/friends-list.module';
 import { SharedModule } from './shared/shared.module';
@@ -20,7 +18,6 @@ import { rootReducer } from './store/app.reducer';
   imports: [
     BrowserModule,
     NgReduxModule,
-    ArchwizardModule,
     AuthModule,
     FriendsListModule,
     SharedModule

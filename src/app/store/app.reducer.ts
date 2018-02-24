@@ -6,5 +6,5 @@ import { AppState } from './app.state';
 export const rootReducer = 
   combineReducers<AppState>({
     auth: authReducer,
-    friends: friendsListReducer
+    friendsList: friendsListReducer
   });

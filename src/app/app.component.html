@@ -2,10 +2,12 @@
   <app-wizard-step title="Login to Facebook" [allowNavigate]="false">
     <app-sign-in (onSignIn)="signIn($event)"></app-sign-in>
   </app-wizard-step>
-  <app-wizard-step title="Select Friends" [allowNavigate]="false">
-      <app-friends-list></app-friends-list>
+  <app-wizard-step title="Select Friends Lists" [allowNavigate]="false">
+      <app-friends-list 
+        (onAddToSelectedFriendsList)="addToSelectedFriendsList($event)"
+        (onRemoveFromSelectedFriendsList)="removeFromSelectedFriendsList($event)"></app-friends-list>
   </app-wizard-step>
-  <app-wizard-step title="Complete" [allowNavigate]="false">
+  <app-wizard-step title="Enjoy" [allowNavigate]="false">
     <h1>Complete</h1>
   </app-wizard-step>
 </app-wizard>

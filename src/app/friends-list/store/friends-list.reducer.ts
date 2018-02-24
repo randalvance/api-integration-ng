@@ -1,6 +1,7 @@
 import { Action } from 'redux';
 import { FriendsListState, INITIAL_STATE } from './friends-list.state';
 import { SingleFriendsListAction, MultiFriendsListAction, FriendsListActions } from './friends-list.actions';
+import { FriendsList } from '../models/FriendsList';
 
 export const friendsListReducer = (state : FriendsListState = INITIAL_STATE, a : Action) : FriendsListState => {
     const singleFriendAction = a as SingleFriendsListAction;
@@ -10,15 +11,20 @@ export const friendsListReducer = (state : FriendsListState = INITIAL_STATE, a :
         case FriendsListActions.ADD_FRIENDS_LISTS:
             return {
                 ...state,
-                friendsList: [...state.friendsList, ...multiFriendAction.payload]
-            }
-        case FriendsListActions.ADD_FRIENDS_LIST:
+                friendsLists: [...state.friendsLists, ...multiFriendAction.payload]
+            };
+        case FriendsListActions.ADD_TO_SELECTED_FRIENDS_LISTS:
             return {
                 ...state,
-                friendsList: [...state.friendsList, singleFriendAction.payload]
+                friendsLists: state.friendsLists.filter(fl => fl.id != singleFriendAction.payload.id),
+                selectedFriendsLists: [...state.selectedFriendsLists, singleFriendAction.payload]
             };
-        case FriendsListActions.REMOVE_FRIENDS_LIST:
-            return state;
+        case FriendsListActions.REMOVE_FROM_SELECTED_FRIENDS_LISTS:
+            return {
+                ...state,
+                selectedFriendsLists: state.selectedFriendsLists.filter(fl => fl.id != singleFriendAction.payload.id),
+                friendsLists: [...state.friendsLists, singleFriendAction.payload]
+            };
         default:
             return state;
     }

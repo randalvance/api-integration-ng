@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Output, OnInit } from '@angular/core';
 import { dispatch, select, select$, WithSubStore } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
 import { FriendsList } from '../../models/FriendsList';
@@ -12,12 +12,26 @@ import { friendsListReducer } from '../../store/friends-list.reducer';
 })
 export class FriendsListComponent implements OnInit {
   
-  @select(store => store.friendsList.friendsLists) 
-  readonly friendsList$: Observable<FriendsList[]>;
+  @Output()
+  onAddToSelectedFriendsList : EventEmitter<FriendsList> = new EventEmitter<FriendsList>();
 
-  constructor() { }
+  @Output()
+  onRemoveFromSelectedFriendsList : EventEmitter<FriendsList> = new EventEmitter<FriendsList>();
+
+  @select(store => store.friendsList.friendsLists) 
+  readonly friendsList$ : Observable<FriendsList[]>;
+
+  @select(store => store.friendsList.selectedFriendsLists)
+  readonly selectedFriendsList$ : Observable<FriendsList[]>;
 
   ngOnInit() {
   }
 
+  addToSelectedFriendsList(friendsList : FriendsList) {
+    this.onAddToSelectedFriendsList.emit(friendsList);
+  }
+
+  removeFromSelectedFriendsList(friendsList : FriendsList) {
+    this.onRemoveFromSelectedFriendsList.emit(friendsList);
+  }
 }

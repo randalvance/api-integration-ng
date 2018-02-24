@@ -9,6 +9,7 @@ import { AppState } from '../../store/app.state';
 import 'rxjs/add/observable/from';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
+import { FriendsListApiResponse } from '../models/FriendsListApiReponse';
 
 @Injectable()
 export class FriendsListService {
@@ -30,7 +31,8 @@ export class FriendsListService {
                     'access_token' : accessToken,
                     'fields': 'id,name' }
             })
-            .map((response: Response) => <any>response.json())
+            .map((response: Response) => <FriendsListApiResponse>response.json())
+            .map(apiResponse => apiResponse.data.map(apiFriendsList => <FriendsList>{ id : apiFriendsList.id, name: apiFriendsList.name }))
             .catch((err, caught) => {
                 return Observable.throw(err || 'An error occured');
             });
