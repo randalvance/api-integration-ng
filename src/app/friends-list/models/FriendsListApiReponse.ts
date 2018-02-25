@@ -2,6 +2,6 @@ interface FriendsList {
     id : string,
     name : string
 }
-export interface FriendsListApiResponse {
+export interface FriendsListFacebookResponse {
     data : FriendsList[]
 }

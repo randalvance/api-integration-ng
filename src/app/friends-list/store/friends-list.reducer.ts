@@ -19,6 +19,13 @@ export const friendsListReducer = (state : FriendsListState = INITIAL_STATE, a :
                 friendsLists: state.friendsLists.filter(fl => fl.id != singleFriendAction.payload.id),
                 selectedFriendsLists: [...state.selectedFriendsLists, singleFriendAction.payload]
             };
+        case FriendsListActions.ADD_FRIENDS_LISTS_TO_SELECTED_FRIENDS_LISTS:
+            return {
+                ...state,
+                friendsLists: state.friendsLists.filter(
+                    fl => multiFriendAction.payload.findIndex(sfl => sfl.id == fl.id) == -1),
+                selectedFriendsLists: [...state.selectedFriendsLists, ...multiFriendAction.payload]
+            };
         case FriendsListActions.REMOVE_FROM_SELECTED_FRIENDS_LISTS:
             return {
                 ...state,

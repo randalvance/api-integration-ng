@@ -4,10 +4,16 @@
   </app-wizard-step>
   <app-wizard-step title="Select Friends Lists" [allowNavigate]="false">
       <app-friends-list 
+        [isFriendsListLoading]="isFriendsListLoading"
+        [isSelectedFriendsListLoading]="isSelectedFriendsListLoading"
         (onAddToSelectedFriendsList)="addToSelectedFriendsList($event)"
-        (onRemoveFromSelectedFriendsList)="removeFromSelectedFriendsList($event)"></app-friends-list>
+        (onRemoveFromSelectedFriendsList)="removeFromSelectedFriendsList($event)"
+        (onSave)="save()"></app-friends-list>
   </app-wizard-step>
   <app-wizard-step title="Enjoy" [allowNavigate]="false">
-    <h1>Complete</h1>
+    <div class="page-container">
+      <h2>Complete</h2>
+      <p>Your friends list was imported to our database. If you refresh this site and log in again, you will notice that the friends list you previously selected are automatically selected.</p>
+    </div>
   </app-wizard-step>
 </app-wizard>

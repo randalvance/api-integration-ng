@@ -4,6 +4,6 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 export const environment = {
   production: false,
-  facebookGraphApiBaseUrl: '',
-  backendBaseApiUrl: ''
+  facebookGraphApiBaseUrl: 'https://graph.facebook.com/v2.12/',
+  backendBaseApiUrl: 'http://localhost:8001/api/v1/'
 };

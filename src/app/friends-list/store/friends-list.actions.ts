@@ -11,6 +11,7 @@ export type MultiFriendsListAction = FluxStandardAction<FriendsList[], MetaData>
 export class FriendsListActions {
     static readonly ADD_FRIENDS_LISTS : string = 'ADD_FRIENDS_LISTS';
     static readonly ADD_TO_SELECTED_FRIENDS_LISTS : string = 'ADD_TO_SELECTED_FRIENDS_LISTS';
+    static readonly ADD_FRIENDS_LISTS_TO_SELECTED_FRIENDS_LISTS : string = 'ADD_FRIENDS_LISTS_TO_SELECTED_FRIENDS_LISTS';
     static readonly REMOVE_FROM_SELECTED_FRIENDS_LISTS : string = 'REMOVE_FROM_SELECTED_FRIENDS_LISTS';
 
     @dispatch()
@@ -28,7 +29,14 @@ export class FriendsListActions {
     });
 
     @dispatch()
-    removeFromSelectedFriendsList = (payload: FriendsList) : SingleFriendsListAction => ({
+    addFriendsListsToSelectedFriendsList = (payload: FriendsList[]) : MultiFriendsListAction => ({
+        type: FriendsListActions.ADD_FRIENDS_LISTS_TO_SELECTED_FRIENDS_LISTS,
+        meta: {},
+        payload
+    });
+
+    @dispatch()
+    removeFromSelectedFriendsList = (payload: FriendsList | FriendsList) : SingleFriendsListAction => ({
         type: FriendsListActions.REMOVE_FROM_SELECTED_FRIENDS_LISTS,
         meta: {},
         payload

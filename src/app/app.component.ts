@@ -9,6 +9,7 @@ import { WizardComponent } from './shared/components';
 import { FriendsListService } from './friends-list/services/friends-list.service';
 
 import 'rxjs/add/operator/mergeMap';
+import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/do';
 import { FriendsListActions } from './friends-list/store/friends-list.actions';
@@ -25,18 +26,31 @@ export class AppComponent implements OnInit {
   @select(store => store.auth.loggedInUser) 
   readonly loggedInUser$ : Observable<UserInfo>
 
+  @select(store => store.friendsList.friendsLists) 
+  readonly friendsLists$ : Observable<FriendsList[]>
+
+  isFriendsListLoading : boolean = true;
+  
+  isSelectedFriendsListLoading : boolean = true;
+
   constructor(
-    private friendService: FriendsListService,
+    private store : NgRedux<AppState>,
+    private friendService : FriendsListService,
     private authActions : AuthActions,
-    private friendsListActions: FriendsListActions) {
+    private friendsListActions : FriendsListActions) {
   }
 
   ngOnInit(): void {
     this.loggedInUser$
-      .filter((user, _) => !!(user && user.token))
-      .do(user => this.wizard.next())
-      .flatMap(user => this.friendService.listAllFriendsList())
-      .subscribe(friendsLists => this.friendsListActions.addFriendsLists(friendsLists));
+        .filter((user, _) => !!(user && user.token))
+        .do(user => this.wizard.next())
+        .flatMap(user => this.friendService.getFriendsListsFromFacebook())
+        .map(friendsLists => this.friendsListActions.addFriendsLists(friendsLists))
+        .do(fl => this.isFriendsListLoading = false)
+        .switchMap(() => this.friendService.getFriendsListsFromBackend())
+        .map(friendsLists => this.friendsListActions.addFriendsListsToSelectedFriendsList(friendsLists))
+        .do(fl => this.isSelectedFriendsListLoading = false)
+        .subscribe(x => x);
   }
 
   signIn(userInfo: UserInfo) {
@@ -49,5 +63,13 @@ export class AppComponent implements OnInit {
 
   removeFromSelectedFriendsList(friendsList : FriendsList) {
     this.friendsListActions.removeFromSelectedFriendsList(friendsList);
+  }
+
+  save() {
+    let selectedFriendsLists = this.store.getState().friendsList.selectedFriendsLists;
+
+    this.friendService.saveFriendsListsToBackend(selectedFriendsLists).subscribe(() => {
+      this.wizard.next();
+    });
   }
 }

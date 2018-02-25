@@ -10,7 +10,7 @@ services:
       - randal-apiintegration
     environment:
      - FACEBOOK_GRAPH_API_BASE_URL=https://graph.facebook.com/v2.12/
-     - BACKEND_GRAPH_API_BASE_URL=http://apiintegration-api:8001
+     - BACKEND_GRAPH_API_BASE_URL=http://localhost:8001/api/v1/
   randal-apiintegration:
     image: randal/apiintegration
     container_name: 'apiintegration-api'

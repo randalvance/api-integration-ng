@@ -1,12 +1,13 @@
 <div class="page-container">
     <div class="row">
         <div class="col-md-6 offset-md-6">
-            <button class="btn btn-primary">Save Selected Friends List</button>
+            <button class="btn btn-primary" (click)="save()">Import Friends List</button>
         </div>
     </div>
     <div class="row friends-list-container">
         <div class="col-md-6">
-            <h2>List of Friends List</h2> 
+            <h2>List of Friends List</h2>
+            <app-loader *ngIf="isFriendsListLoading"></app-loader>
             <table class="table table-responsive">
                 <tr *ngFor="let friendsList of friendsList$ | async">
                     <td>{{friendsList.name}}</td>
@@ -16,7 +17,8 @@
         </div>
 
         <div class="col-md-6">
-            <h2>Friends List to Save</h2>
+            <h2>Friends List in Database</h2>
+            <app-loader *ngIf="isSelectedFriendsListLoading"></app-loader>
             <table class="table table-responsive">
                     <tr *ngFor="let friendsList of selectedFriendsList$ | async">
                         <td>{{friendsList.name}}</td>
